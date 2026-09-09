@@ -20,3 +20,9 @@
   for the site. Source prompts are recorded in `image-assets.md`.
 - Added per-page metadata and Event structured data.
 - Production build and project lint completed successfully across all seven routes.
+
+## 2026-09-09 — GitHub delivery
+
+- Pushed the complete validated website to
+  `tbwo-019048/the-living-memorial-website` on the `main` branch.
+- Preserved the private Sites source repository as the `sites` remote.
