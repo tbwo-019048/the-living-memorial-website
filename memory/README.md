@@ -13,11 +13,12 @@ Read this folder before every implementation step.
 - Backend: Supabase PostgreSQL, Auth and Storage using
   `supabase/migrations/001_living_memorial.sql`.
 - Theme preference is device-local; editorial content belongs in Supabase.
-- Sites project: `appgprj_6aa1c2af8cb08191a7c1c28176f2de97`.
+- Runtime: native Next.js 16 application deployed by Vercel.
+- Production URL: `https://the-living-memorial-website.vercel.app/`.
 
 ## Working rules
 
 - Preserve user changes.
 - Update `task-log.md` after each completed task.
 - Build successfully, commit with a meaningful description and push.
-- Do not expose Supabase service keys or Sites source credentials.
+- Do not expose Supabase service keys or deployment credentials.

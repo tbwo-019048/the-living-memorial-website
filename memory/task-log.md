@@ -26,3 +26,15 @@
 - Pushed the complete validated website to
   `tbwo-019048/the-living-memorial-website` on the `main` branch.
 - Preserved the private Sites source repository as the `sites` remote.
+
+## 2026-09-10 — Native Vercel conversion
+
+- Replaced the Vinext/Cloudflare Worker runtime with native Next.js 16.3.4.
+- Replaced Vinext, Vite and Wrangler scripts with standard Next.js development,
+  production-build and start scripts.
+- Removed Cloudflare, Vinext and Sites runtime packages and configuration.
+- Added the standard Tailwind/PostCSS configuration used by Next.js.
+- Updated TypeScript configuration and the npm lockfile for the native runtime.
+- Confirmed all public and admin routes prerender successfully in a production
+  Next.js build.
+- Project lint completed successfully.
