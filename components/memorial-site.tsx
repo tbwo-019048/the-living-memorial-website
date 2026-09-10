@@ -31,7 +31,10 @@ import {
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { albums, events, features, gallery, owners, products, type EventRecord } from '@/lib/content';
-import { submitContactMessage, supabaseConfigured } from '@/lib/supabase-rest';
+import { createClient } from '@/lib/supabase/client';
+import { isSupabaseConfigured } from '@/lib/supabase/config';
+
+const supabaseConfigured = isSupabaseConfigured();
 
 export type PublicPage = 'home' | 'about' | 'events' | 'gallery' | 'shop' | 'contact';
 
@@ -704,12 +707,19 @@ function ContactPage() {
       return typeof value === 'string' ? value : '';
     };
     try {
-      await submitContactMessage({
-        name: getText('name'),
-        email: getText('email'),
-        subject: getText('subject'),
-        message: getText('message'),
-      });
+      const supabase = createClient();
+      if (supabase) {
+        const { error } = await supabase.from('contact_messages').insert({
+          name: getText('name'),
+          email: getText('email'),
+          subject: getText('subject'),
+          message: getText('message'),
+        });
+        if (error) throw new Error(error.message);
+      } else {
+        // Preview mode — no project connected. Simulate the round-trip.
+        await new Promise((resolve) => setTimeout(resolve, 450));
+      }
       setFormStatus('sent');
       event.currentTarget.reset();
     } catch {

@@ -59,7 +59,10 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { events, features, gallery, owners, products } from '@/lib/content';
-import { signInAdmin, supabaseConfigured } from '@/lib/supabase-rest';
+import { createClient } from '@/lib/supabase/client';
+import { isSupabaseConfigured } from '@/lib/supabase/config';
+
+const supabaseConfigured = isSupabaseConfigured();
 
 type AdminSection =
   | 'Dashboard'
@@ -180,8 +183,14 @@ function Login({ onEnter }: { onEnter: (token: string | null) => void }) {
     setLoading(true);
     setError('');
     try {
-      const session = await signInAdmin(email, password);
-      onEnter(session.access_token);
+      const supabase = createClient();
+      if (!supabase) {
+        onEnter(null);
+        return;
+      }
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInError) throw new Error(signInError.message);
+      onEnter(data.session?.access_token ?? null);
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : 'Sign in failed.');
     } finally {
